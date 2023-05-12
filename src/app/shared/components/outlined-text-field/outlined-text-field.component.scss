@@ -1,0 +1,106 @@
+:host, .wrapper, input {
+  // background-color: inherit;
+background-color: inherit;
+  width: 100%;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+input {
+  outline: none;
+  height: 56px;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-width: 1px;
+  border-radius: 4px;
+  border-style: solid;
+
+  color: var(--md-sys-color-on-surface-dark);
+  font-family: var(--md-sys-typescale-body-large-font-family-name);
+  font-style: var(--md-sys-typescale-body-large-font-family-style);
+  font-weight: var(--md-sys-typescale-body-large-font-weight);
+  font-size: var(--md-sys-typescale-body-large-font-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
+  letter-spacing: var(--md-sys-typescale-body-large-letter-spacing);
+}
+input::placeholder {
+  color: var(--md-sys-color-on-surface-variant-dark);
+}
+
+.label {
+  background-color: inherit;
+  position: absolute;
+  left: 17px;
+  box-sizing: border-box;
+  padding: 0 8px;
+  left: 8px;
+
+  transition: top .1s;
+}
+.label.resting {
+  top: 15px;
+}
+.label.raised {
+  top: -8px;
+}
+
+.wrapper.unfocused {
+  input {
+    border-color: var(--md-sys-color-outline-dark);
+  }
+  .label {
+    color: var(--md-sys-color-on-surface-variant-dark);
+  }
+}
+
+.wrapper.hovered {
+  input {
+    border-color: var(--md-sys-color-on-surface-dark);
+  }
+
+  .label {
+    color: var(--md-sys-color-on-surface-dark);
+  }
+}
+
+.wrapper.focused {
+  input {
+    border-color: var(--md-sys-color-primary-dark);
+  }
+
+  .label {
+    color: var(--md-sys-color-primary-dark);
+  }
+}
+
+.wrapper.error {
+  input {
+    border-color: var(--md-sys-color-error-dark);
+  }
+
+  .label {
+    color: var(--md-sys-color-error-dark);
+  }
+}
+
+.wrapper.disabled {
+  * {
+    cursor: not-allowed;
+  }
+  input {
+    border-color: var(--md-sys-color-on-surface-dark);
+  }
+
+  .label {
+    color: var(--md-sys-color-on-surface-dark);
+    opacity: 0.12;
+  }
+  input, input::placeholder, .label {
+    color: var(--md-sys-color-on-surface-variant-dark);
+    opacity: .12;
+  }
+}

@@ -9,7 +9,7 @@
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-03ced59f4c914844c1c325d96b00e678fbe7924f416d4f652e84cb30af9a2f03e8fa654e00e2f5776f160c6bb0bd43aa3aa6f1225780dafdfdab9e2c9b82c875",
+            "id": "component-AppComponent-418547411e29bb846dafa32162ccd51d341ab280592071f21f07b48040e2c78a1b27954f192016e31ec58e43895b59b2f06a2387e1098d4fa9cdb0fc348d2499",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -29,6 +29,26 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "fb",
+                    "defaultValue": "inject(FormBuilder)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormBuilder",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "form",
+                    "defaultValue": "this.fb.group({\n    firstname: ['', Validators.required],\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "FormGroup",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                },
+                {
                     "name": "title",
                     "defaultValue": "'MicroManager'",
                     "deprecated": false,
@@ -36,7 +56,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 14
+                    "line": 16
                 }
             ],
             "methodsClass": [],
@@ -47,7 +67,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterOutlet } from '@angular/router';\n\n@Component({\n  selector: 'app-root',\n  standalone: true,\n  imports: [CommonModule, RouterOutlet],\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss'],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n})\nexport class AppComponent {\n  title = 'MicroManager';\n}\n",
+            "sourceCode": "import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterOutlet } from '@angular/router';\nimport { OutlinedTextFieldComponent } from './shared/components/outlined-text-field/outlined-text-field.component';\nimport { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';\n\n@Component({\n  selector: 'app-root',\n  standalone: true,\n  imports: [CommonModule, RouterOutlet, OutlinedTextFieldComponent, ReactiveFormsModule],\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss'],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n})\nexport class AppComponent {\n  title = 'MicroManager';\n\n  fb: FormBuilder = inject(FormBuilder);\n  form: FormGroup = this.fb.group({\n    firstname: ['', Validators.required],\n  })\n\n  constructor() {\n    this.form.valueChanges.subscribe((value) => console.log(value));\n    this.form.controls['firstname'].disable();\n\n    setTimeout(() => this.form.controls['firstname'].enable(), 5000)\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -56,7 +76,355 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<router-outlet></router-outlet>\n"
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 21
+            },
+            "templateData": "<router-outlet></router-outlet>\n<div [formGroup]=\"form\">\n  <outlined-text-field placeholder=\"label\" error=\"\" formControlName=\"firstname\"/>\n</div>\n"
+        },
+        {
+            "name": "BaseTextFieldComponent",
+            "id": "component-BaseTextFieldComponent-9c86a608d7cf3633070c3b6ab3dcd3b4f2d5237eb8fe64a4a627fd179e3137104e85309f3a76ba3392dac6b0e75eca25738619dfe5e37f30e5d2a1c9822409cb",
+            "file": "src/app/shared/components/base/base-text-field/base-text-field.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "generic-text-input",
+            "styleUrls": [],
+            "styles": [],
+            "template": "",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "error",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 17,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "placeholder",
+                    "defaultValue": "''",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "classList",
+                    "defaultValue": "computed(\r\n      () => `${this.state()} ${this.populated() ? 'populated' : 'unpopulated'}`\r\n    )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                },
+                {
+                    "name": "initialvalue",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 31
+                },
+                {
+                    "name": "input",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef<HTMLInputElement>",
+                    "optional": true,
+                    "description": "",
+                    "line": 18,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'input'"
+                        }
+                    ]
+                },
+                {
+                    "name": "onChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 28
+                },
+                {
+                    "name": "onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 29
+                },
+                {
+                    "name": "populated",
+                    "defaultValue": "signal(false)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "state",
+                    "defaultValue": "signal('unfocused')",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "WritableSignal<TextFieldState>",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "touched",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "markAsTouched",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 67,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 33,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "ngOnChanges",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 43,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onBlur",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 93,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onDisable",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 115,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onEnable",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 119,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onFocus",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 84,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onMouseOut",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 111,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "onMouseOver",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 102,
+                    "deprecated": false,
+                    "deprecationMessage": ""
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 59,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 63,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "setDisabledState",
+                    "args": [
+                        {
+                            "name": "disabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 74,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "disabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "obj",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "obj",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, ElementRef, ViewChild, signal, effect, computed, WritableSignal, Input } from '@angular/core';\r\nimport { ControlValueAccessor } from '@angular/forms';\r\n\r\nexport type TextFieldState =\r\n  | 'unfocused'\r\n  | 'hovered'\r\n  | 'focused'\r\n  | 'error'\r\n  | 'disabled';\r\n\r\n  @Component({\r\n    selector: 'generic-text-input',\r\n    template: '',\r\n  })\r\n  export class BaseTextFieldComponent implements ControlValueAccessor {\r\n    @Input() placeholder: string = '';\r\n    @Input() error?: string;\r\n    @ViewChild('input') input?: ElementRef<HTMLInputElement>;\r\n\r\n    // signals\r\n    state: WritableSignal<TextFieldState> = signal('unfocused');\r\n    populated = signal(false);\r\n    classList = computed(\r\n      () => `${this.state()} ${this.populated() ? 'populated' : 'unpopulated'}`\r\n    );\r\n\r\n    // value accessor\r\n    onChange = (value: any) => {};\r\n    onTouched = () => {};\r\n    touched = false;\r\n    initialvalue?: string;\r\n\r\n    ngAfterViewInit() {\r\n      const el: HTMLInputElement | undefined = this.input?.nativeElement;\r\n      el?.addEventListener('input', () => {\r\n        this.onChange(el.value);\r\n        this.populated.set(el.value.length > 0 || this.placeholder.length > 0);\r\n      });\r\n\r\n      if (el && this.initialvalue) el.value = this.initialvalue;\r\n    }\r\n\r\n    ngOnChanges() {\r\n      if (this.error) this.state.set('error');\r\n      console.log(this.error);\r\n      if (this.placeholder.length > 0) this.populated.set(true);\r\n    }\r\n\r\n    //#region Value Accessor\r\n    writeValue(obj: any): void {\r\n      const el = this.input?.nativeElement;\r\n      if (el) {\r\n        el.value = obj;\r\n      } else {\r\n        this.initialvalue = obj;\r\n      }\r\n    }\r\n\r\n    registerOnChange(fn: any): void {\r\n      this.onChange = fn;\r\n    }\r\n\r\n    registerOnTouched(fn: any): void {\r\n      this.onTouched = fn;\r\n    }\r\n\r\n    markAsTouched() {\r\n      if (!this.touched) {\r\n        this.touched = true;\r\n        this.onTouched();\r\n      }\r\n    }\r\n\r\n    setDisabledState(disabled: boolean) {\r\n      if(disabled) {\r\n        this.onDisable();\r\n      } else {\r\n        this.onEnable();\r\n      }\r\n    }\r\n    //#endregion\r\n\r\n    //#region State Reducers\r\n    onFocus() {\r\n      this.state.update((state) => {\r\n        if (state === 'unfocused' || state === 'hovered') {\r\n          return 'focused';\r\n        }\r\n        return state;\r\n      });\r\n    }\r\n\r\n    onBlur() {\r\n      this.state.update((state) => {\r\n        if (state === 'focused') {\r\n          return 'unfocused';\r\n        }\r\n        return state;\r\n      });\r\n    }\r\n\r\n    onMouseOver() {\r\n      this.state.update((state) => {\r\n        if (state === 'unfocused') {\r\n          return 'hovered';\r\n        }\r\n        return state;\r\n      });\r\n    }\r\n\r\n    onMouseOut() {\r\n      this.state.update((state) => (state === 'hovered' ? 'unfocused' : state));\r\n    }\r\n\r\n    onDisable() {\r\n      this.state.set('disabled');\r\n    }\r\n\r\n    onEnable() {\r\n      this.state.update(state => {\r\n        if(state === 'disabled') {\r\n          return this.error ? 'error' : 'unfocused';\r\n        } else {\r\n          return state;\r\n        }\r\n      });\r\n    }\r\n    //#endregion\r\n  }\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "implements": [
+                "ControlValueAccessor"
+            ]
         },
         {
             "name": "BodyTextComponent",
@@ -276,14 +644,19 @@
         },
         {
             "name": "OutlinedTextFieldComponent",
-            "id": "component-OutlinedTextFieldComponent-c95783bfdbbd743973d4fba90bf25701e718a35e76e4fadf279dee6a4050249681aeedff8352fe89d3acd702fb1c22f6640974bc1111acfbee6568c80203c505",
+            "id": "component-OutlinedTextFieldComponent-4f5a2315b1c75d612b9c6c280147bbf1d271ceb5660d3f9cef8ea65825f77163c8fecacdd631124f35e1bb13cc2b3629093d7bce2fa098c9eb12ff78da29f1c3",
             "file": "src/app/shared/components/outlined-text-field/outlined-text-field.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
-            "providers": [],
+            "providers": [
+                {
+                    "name": "{\n    provide: NG_VALUE_ACCESSOR, multi: true, useExisting: OutlinedTextFieldComponent\n}",
+                    "type": "component"
+                }
+            ],
             "selector": "outlined-text-field",
             "styleUrls": [
                 "./outlined-text-field.component.scss"
@@ -295,117 +668,381 @@
             "viewProviders": [],
             "inputsClass": [
                 {
-                    "name": "disabled",
-                    "defaultValue": "false",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "line": 22,
-                    "type": "boolean",
-                    "decorators": []
-                },
-                {
                     "name": "error",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 23,
+                    "line": 17,
                     "type": "string",
-                    "decorators": []
+                    "decorators": [],
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
                 },
                 {
                     "name": "placeholder",
+                    "defaultValue": "''",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 21,
+                    "line": 16,
                     "type": "string",
-                    "decorators": []
+                    "decorators": [],
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
                 }
             ],
             "outputsClass": [],
             "propertiesClass": [
                 {
-                    "name": "_disabled",
+                    "name": "classList",
+                    "defaultValue": "computed(\r\n      () => `${this.state()} ${this.populated() ? 'populated' : 'unpopulated'}`\r\n    )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23,
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "initialvalue",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 31,
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "input",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ElementRef<HTMLInputElement>",
+                    "optional": true,
+                    "description": "",
+                    "line": 18,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'input'"
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "onChange",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 28,
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "onTouched",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 29,
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "populated",
                     "defaultValue": "signal(false)",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "WritableSignal<boolean>",
+                    "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 28
-                },
-                {
-                    "name": "_error",
-                    "defaultValue": "signal(undefined)",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "WritableSignal<string | undefined>",
-                    "optional": false,
-                    "description": "",
-                    "line": 29
-                },
-                {
-                    "name": "_focused",
-                    "defaultValue": "signal(false)",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "WritableSignal<boolean>",
-                    "optional": false,
-                    "description": "",
-                    "line": 26
-                },
-                {
-                    "name": "_hovered",
-                    "defaultValue": "signal(false)",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "WritableSignal<boolean>",
-                    "optional": false,
-                    "description": "",
-                    "line": 27
-                },
-                {
-                    "name": "fb",
-                    "defaultValue": "inject(FormBuilder)",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "FormBuilder",
-                    "optional": false,
-                    "description": "",
-                    "line": 53,
-                    "modifierKind": [
-                        121
-                    ]
-                },
-                {
-                    "name": "form",
-                    "defaultValue": "this.fb.group({\n    input: ['']\n  })",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "FormGroup",
-                    "optional": false,
-                    "description": "",
-                    "line": 54
+                    "line": 22,
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
                 },
                 {
                     "name": "state",
-                    "defaultValue": "computed(() => {\n\n    if(this._disabled()) {\n      return 'disabled'\n    } else if (this._error()) {\n      return 'error'\n    } else if (this._focused()) {\n      return 'focused'\n    } else if (this._hovered()) {\n      return 'hovered'\n    } else {\n      return 'unfocused'\n    }\n\n  })",
+                    "defaultValue": "signal('unfocused')",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Signal<OutlinedTextFieldState>",
+                    "type": "WritableSignal<TextFieldState>",
                     "optional": false,
                     "description": "",
-                    "line": 31
+                    "line": 21,
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "touched",
+                    "defaultValue": "false",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30,
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
                 }
             ],
             "methodsClass": [
+                {
+                    "name": "markAsTouched",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 67,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "ngAfterViewInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 33,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
                 {
                     "name": "ngOnChanges",
                     "args": [],
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 47,
+                    "line": 43,
                     "deprecated": false,
-                    "deprecationMessage": ""
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "onBlur",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 93,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "onDisable",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 115,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "onEnable",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 119,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "onFocus",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 84,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "onMouseOut",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 111,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "onMouseOver",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 102,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "registerOnChange",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 59,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "registerOnTouched",
+                    "args": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 63,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "fn",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "setDisabledState",
+                    "args": [
+                        {
+                            "name": "disabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 74,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "disabled",
+                            "type": "boolean",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
+                },
+                {
+                    "name": "writeValue",
+                    "args": [
+                        {
+                            "name": "obj",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 50,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "obj",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "BaseTextFieldComponent"
+                    }
                 }
             ],
             "deprecated": false,
@@ -415,7 +1052,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { CommonModule } from '@angular/common';\nimport { ChangeDetectionStrategy, Component, Input, Signal, WritableSignal, computed, inject, signal } from '@angular/core';\nimport { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';\n\nexport type OutlinedTextFieldState =\n'unfocused'\n| 'hovered'\n| 'focused'\n| 'error'\n| 'disabled';\n\n@Component({\n  selector: 'outlined-text-field',\n  standalone: true,\n  imports: [CommonModule, ReactiveFormsModule],\n  templateUrl: './outlined-text-field.component.html',\n  styleUrls: ['./outlined-text-field.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class OutlinedTextFieldComponent {\n  @Input() placeholder?: string;\n  @Input() disabled: boolean = false;\n  @Input() error?: string;\n\n\n  _focused: WritableSignal<boolean> = signal(false);\n  _hovered: WritableSignal<boolean> = signal(false);\n  _disabled: WritableSignal<boolean> = signal(false);\n  _error: WritableSignal<string | undefined> = signal(undefined);\n\n  state: Signal<OutlinedTextFieldState> = computed(() => {\n\n    if(this._disabled()) {\n      return 'disabled'\n    } else if (this._error()) {\n      return 'error'\n    } else if (this._focused()) {\n      return 'focused'\n    } else if (this._hovered()) {\n      return 'hovered'\n    } else {\n      return 'unfocused'\n    }\n\n  })\n\n  ngOnChanges() {\n    this._disabled.set(this.disabled);\n    this._error.set(this.error);\n  }\n\n\n  private fb: FormBuilder = inject(FormBuilder);\n  form: FormGroup = this.fb.group({\n    input: ['']\n  })\n\n\n}\n",
+            "sourceCode": "import { CommonModule } from '@angular/common';\nimport { ChangeDetectionStrategy, Component, Input, WritableSignal, signal, effect, computed } from '@angular/core';\nimport { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';\nimport { BaseTextFieldComponent } from '../base/base-text-field/base-text-field.component';\n\n\n\n@Component({\n  selector: 'outlined-text-field',\n  standalone: true,\n  imports: [CommonModule, ReactiveFormsModule],\n  templateUrl: './outlined-text-field.component.html',\n  styleUrls: ['./outlined-text-field.component.scss'],\n   providers: [\n    {\n      provide: NG_VALUE_ACCESSOR,\n      multi:true,\n      useExisting: OutlinedTextFieldComponent\n    }\n  ],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\n\nexport class OutlinedTextFieldComponent extends BaseTextFieldComponent {}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -424,7 +1061,8 @@
                 }
             ],
             "stylesData": "",
-            "templateData": "<div [formGroup]=\"form\">\n  <input\n    formControlName=\"input\"\n    [placeholder]=\"placeholder\"\n  />\n  <p>{{state()}}</p>\n</div>\n"
+            "extends": "BaseTextFieldComponent",
+            "templateData": "<div>\n  <input\n    #input\n    [placeholder]=\"placeholder\"\n    [disabled]=\"state() === 'disabled'\"\n    (focus)=\"onFocus()\"\n    (blur)=\"onBlur()\"\n    (mouseover)=\"onMouseOver()\"\n    (mouseout)=\"onMouseOut()\"\n    [classList]=\"classList()\"\n  />\n  <p>{{classList()}}</p>\n</div>\n"
         },
         {
             "name": "TitleTextComponent",
@@ -504,16 +1142,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<BodyTextComponent>",
-                "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Body Text',\r\n  component: BodyTextComponent,\r\n  tags: ['autodocs']\r\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app/shared/components/base/display-text/display-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -524,11 +1152,11 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Meta<LabelTextComponent>",
-                "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Label Text',\r\n  component: LabelTextComponent,\r\n  tags: ['autodocs'],\r\n}"
+                "type": "Meta<BodyTextComponent>",
+                "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Body Text',\r\n  component: BodyTextComponent,\r\n  tags: ['autodocs']\r\n}"
             },
             {
                 "name": "meta",
@@ -551,6 +1179,16 @@
                 "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Title Text',\r\n  component: TitleTextComponent,\r\n  tags: ['autodocs'],\r\n}"
             },
             {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<LabelTextComponent>",
+                "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Label Text',\r\n  component: LabelTextComponent,\r\n  tags: ['autodocs'],\r\n}"
+            },
+            {
                 "name": "preview",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -568,17 +1206,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    disabled: false,\r\n    placeholder: 'Placeholder',\r\n    error: \"Error\"\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<outlined-text-field> [disabled]=\"disabled\"</outlined-text-field>',\r\n  }),\r\n}"
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md'\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<body-text [size]=\"size\">Test</body-text>'\r\n  })\r\n}"
+                "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    placeholder: 'Placeholder',\r\n    error: \"Error\"\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<outlined-text-field> [disabled]=\"disabled\"</outlined-text-field>',\r\n\r\n  }),\r\n}"
             },
             {
                 "name": "Story",
@@ -594,11 +1222,11 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md',\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<label-text [size]=\"size\">Test</label-text>',\r\n  }),\r\n}"
+                "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md'\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<body-text [size]=\"size\">Test</body-text>'\r\n  })\r\n}"
             },
             {
                 "name": "Story",
@@ -619,6 +1247,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md',\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<title-text [size]=\"size\">Test</title-text>',\r\n  }),\r\n}"
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md',\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<label-text [size]=\"size\">Test</label-text>',\r\n  }),\r\n}"
             }
         ],
         "functions": [],
@@ -646,33 +1284,11 @@
                 "kind": 186
             },
             {
-                "name": "OutlinedTextFieldState",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "\"unfocused\" | \"hovered\" | \"focused\" | \"error\" | \"disabled\"",
-                "file": "src/app/shared/components/outlined-text-field/outlined-text-field.component.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 186
-            },
-            {
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "StoryObj<OutlinedTextFieldComponent>",
                 "file": "src/app/shared/components/outlined-text-field/outlined-text-field.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 177
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
-                "rawtype": "StoryObj<BodyTextComponent>",
-                "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -693,8 +1309,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<LabelTextComponent>",
-                "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                "rawtype": "StoryObj<BodyTextComponent>",
+                "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -721,6 +1337,28 @@
                 "deprecationMessage": "",
                 "description": "",
                 "kind": 177
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<LabelTextComponent>",
+                "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 177
+            },
+            {
+                "name": "TextFieldState",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "\"unfocused\" | \"hovered\" | \"focused\" | \"error\" | \"disabled\"",
+                "file": "src/app/shared/components/base/base-text-field/base-text-field.component.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 186
             }
         ],
         "enumerations": [],
@@ -756,29 +1394,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    disabled: false,\r\n    placeholder: 'Placeholder',\r\n    error: \"Error\"\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<outlined-text-field> [disabled]=\"disabled\"</outlined-text-field>',\r\n  }),\r\n}"
-                }
-            ],
-            "src/app/shared/components/base/body-text/body-text.stories.ts": [
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Meta<BodyTextComponent>",
-                    "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Body Text',\r\n  component: BodyTextComponent,\r\n  tags: ['autodocs']\r\n}"
-                },
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story",
-                    "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md'\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<body-text [size]=\"size\">Test</body-text>'\r\n  })\r\n}"
+                    "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    placeholder: 'Placeholder',\r\n    error: \"Error\"\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<outlined-text-field> [disabled]=\"disabled\"</outlined-text-field>',\r\n\r\n  }),\r\n}"
                 }
             ],
             "src/app/shared/components/base/display-text/display-text.stories.ts": [
@@ -803,26 +1419,26 @@
                     "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md',\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<display-text [size]=\"size\">Test</display-text>',\r\n  }),\r\n}"
                 }
             ],
-            "src/app/shared/components/base/label-text/label-text.stories.ts": [
+            "src/app/shared/components/base/body-text/body-text.stories.ts": [
                 {
                     "name": "meta",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                    "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "type": "Meta<LabelTextComponent>",
-                    "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Label Text',\r\n  component: LabelTextComponent,\r\n  tags: ['autodocs'],\r\n}"
+                    "type": "Meta<BodyTextComponent>",
+                    "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Body Text',\r\n  component: BodyTextComponent,\r\n  tags: ['autodocs']\r\n}"
                 },
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                    "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md',\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<label-text [size]=\"size\">Test</label-text>',\r\n  }),\r\n}"
+                    "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md'\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<body-text [size]=\"size\">Test</body-text>'\r\n  })\r\n}"
                 }
             ],
             "src/app/shared/components/base/headline-text/headline-text.stories.ts": [
@@ -869,6 +1485,28 @@
                     "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md',\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<title-text [size]=\"size\">Test</title-text>',\r\n  }),\r\n}"
                 }
             ],
+            "src/app/shared/components/base/label-text/label-text.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<LabelTextComponent>",
+                    "defaultValue": "{\r\n  /* 👇 The title prop is optional.\r\n   * See https://storybook.js.org/docs/angular/configure/overview#configure-story-loading\r\n   * to learn how to generate automatic titles\r\n   */\r\n  title: 'Label Text',\r\n  component: LabelTextComponent,\r\n  tags: ['autodocs'],\r\n}"
+                },
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\r\n  args: {\r\n    //👇 The args you need here will depend on your component\r\n    size: 'md',\r\n  },\r\n  render: (args) => ({\r\n    props: args,\r\n    template: '<label-text [size]=\"size\">Test</label-text>',\r\n  }),\r\n}"
+                }
+            ],
             ".storybook/preview.ts": [
                 {
                     "name": "preview",
@@ -911,19 +1549,6 @@
                     "kind": 186
                 }
             ],
-            "src/app/shared/components/outlined-text-field/outlined-text-field.component.ts": [
-                {
-                    "name": "OutlinedTextFieldState",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "\"unfocused\" | \"hovered\" | \"focused\" | \"error\" | \"disabled\"",
-                    "file": "src/app/shared/components/outlined-text-field/outlined-text-field.component.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 186
-                }
-            ],
             "src/app/shared/components/outlined-text-field/outlined-text-field.stories.ts": [
                 {
                     "name": "Story",
@@ -931,19 +1556,6 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<OutlinedTextFieldComponent>",
                     "file": "src/app/shared/components/outlined-text-field/outlined-text-field.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 177
-                }
-            ],
-            "src/app/shared/components/base/body-text/body-text.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<BodyTextComponent>",
-                    "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -963,13 +1575,13 @@
                     "kind": 177
                 }
             ],
-            "src/app/shared/components/base/label-text/label-text.stories.ts": [
+            "src/app/shared/components/base/body-text/body-text.stories.ts": [
                 {
                     "name": "Story",
                     "ctype": "miscellaneous",
                     "subtype": "typealias",
-                    "rawtype": "StoryObj<LabelTextComponent>",
-                    "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                    "rawtype": "StoryObj<BodyTextComponent>",
+                    "file": "src/app/shared/components/base/body-text/body-text.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1001,6 +1613,32 @@
                     "description": "",
                     "kind": 177
                 }
+            ],
+            "src/app/shared/components/base/label-text/label-text.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<LabelTextComponent>",
+                    "file": "src/app/shared/components/base/label-text/label-text.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 177
+                }
+            ],
+            "src/app/shared/components/base/base-text-field/base-text-field.component.ts": [
+                {
+                    "name": "TextFieldState",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "\"unfocused\" | \"hovered\" | \"focused\" | \"error\" | \"disabled\"",
+                    "file": "src/app/shared/components/base/base-text-field/base-text-field.component.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 186
+                }
             ]
         }
     },
@@ -1025,7 +1663,7 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {
@@ -1036,6 +1674,15 @@
                 "name": "appConfig",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/shared/components/base/base-text-field/base-text-field.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "BaseTextFieldComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/24",
                 "status": "low"
             },
             {
@@ -1189,7 +1836,7 @@
                 "linktype": "component",
                 "name": "OutlinedTextFieldComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/12",
+                "coverageCount": "0/24",
                 "status": "low"
             },
             {

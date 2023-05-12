@@ -19,13 +19,12 @@ type Story = StoryObj<OutlinedTextFieldComponent>;
 export const Story: Story = {
   args: {
     //👇 The args you need here will depend on your component
-    disabled: false,
     placeholder: 'Placeholder',
     error: "Error"
   },
   render: (args) => ({
     props: args,
     template: '<outlined-text-field> [disabled]="disabled"</outlined-text-field>',
-    
+
   }),
 };

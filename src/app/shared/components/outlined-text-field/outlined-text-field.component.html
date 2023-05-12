@@ -1,7 +1,15 @@
-<div [formGroup]="form">
+<div class="wrapper">
   <input
-    formControlName="input"
+    #input
     [placeholder]="placeholder"
+    [disabled]="state() === 'disabled'"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (mouseover)="onMouseOver()"
+    (mouseout)="onMouseOut()"
+    [classList]="classList()"
   />
-  <p>{{state()}}</p>
+  <p *ngIf="label">{{label}}</p>
 </div>
+<p> Test {{stateMachineState()}}</p>
+<p>Test</p>

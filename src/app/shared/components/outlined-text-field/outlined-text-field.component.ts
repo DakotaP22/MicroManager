@@ -1,59 +1,49 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, ViewChild, ElementRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { BaseTextFieldComponent } from '../base/base-text-field/base-text-field.component';
+import { BodyTextComponent } from '../base/body-text/body-text.component';
 
-export type OutlinedTextFieldState =
-'unfocused'
-| 'hovered'
-| 'focused'
-| 'error'
-| 'disabled';
+
 
 @Component({
   selector: 'outlined-text-field',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './outlined-text-field.component.html',
-  styleUrls: ['./outlined-text-field.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, BodyTextComponent],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: OutlinedTextFieldComponent,
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./outlined-text-field.component.scss'],
+  template: `
+    <div [class]="'wrapper ' + classList()">
+      <input
+        #input
+        [placeholder]="placeholder"
+        [disabled]="state() === 'disabled'"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        (mouseover)="onMouseOver()"
+        (mouseout)="onMouseOut()"
+        [classList]="classList()"
+      />
+      <body-text
+        *ngIf="label"
+        #label
+        (click)="onLabelClick()"
+        (mouseover)="onMouseOver()"
+        (mouseout)="onMouseOut()"
+        [size]="labelSize()"
+        [classList]="labelClassList()"
+      >
+        {{ label }}
+      </body-text>
+    </div>
+    <p>{{ stateMachine.state() }}</p>
+  `,
 })
-export class OutlinedTextFieldComponent {
-  @Input() placeholder?: string;
-  @Input() disabled: boolean = false;
-  @Input() error?: string;
-
-
-  _focused: WritableSignal<boolean> = signal(false);
-  _hovered: WritableSignal<boolean> = signal(false);
-  _disabled: WritableSignal<boolean> = signal(false);
-  _error: WritableSignal<string | undefined> = signal(undefined);
-
-  state: Signal<OutlinedTextFieldState> = computed(() => {
-
-    if(this._disabled()) {
-      return 'disabled'
-    } else if (this._error()) {
-      return 'error'
-    } else if (this._focused()) {
-      return 'focused'
-    } else if (this._hovered()) {
-      return 'hovered'
-    } else {
-      return 'unfocused'
-    }
-
-  })
-
-  ngOnChanges() {
-    this._disabled.set(this.disabled);
-    this._error.set(this.error);
-  }
-
-
-  private fb: FormBuilder = inject(FormBuilder);
-  form: FormGroup = this.fb.group({
-    input: ['']
-  })
-
-
-}
+export class OutlinedTextFieldComponent extends BaseTextFieldComponent {}
